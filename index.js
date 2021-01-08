@@ -16,6 +16,7 @@ function createWindow () {
   })
   win.setMenuBarVisibility(false)
   win.loadFile('src/index.html')
+  win.setIcon('src/img/icon.png');
 }
 
 app.whenReady().then(createWindow)
