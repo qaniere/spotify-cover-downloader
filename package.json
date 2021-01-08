@@ -10,7 +10,8 @@
   "author": "Quentin ANIERE",
   "license": "MIT",
   "dependencies": {
-    "electron": "^11.1.1"
+    "electron": "^11.1.1",
+    "sqlite3": "^5.0.1"
   },
   "devDependencies": {
     "electron-reloader": "^1.1.0"
