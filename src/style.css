@@ -1,22 +1,21 @@
 body {
     height: 627px;
     overflow: hidden;
-    background: -webkit-linear-gradient(to bottom, #485563, #29323c) no-repeat;
-    background: linear-gradient(to bottom, #485563, #29323c) no-repeat;
+    background-color: #121212;
 }
 
 td {
-    height: 450px;
-    width: 450px;
-    border: 1px solid black;
+    height: 400px;
+    width: 400px;
+    border: 1px solid white;
     position: absolute;
     left: 50%;
-    margin-left: -225px;
+    margin-left: -200px;
 }
 
 h1 {
     color: white;
     font-size: 40px;
     text-align: center;
-    font-family: 'Oswald', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
