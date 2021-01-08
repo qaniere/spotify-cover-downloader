@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="vendor/micromodal.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@542&display=swap" rel="stylesheet">
     <title>Spotify Cover Download</title>
@@ -14,5 +15,27 @@
         <td>
         </td>
     </table>
+    <div class="modal micromodal-slide" id="modal-welcome" aria-hidden="true">
+        <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+          <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+            <header class="modal__header">
+              <h2 class="modal__title" id="modal-1-title">Welcome !</h2>
+            </header>
+            <main class="modal__content" id="modal-1-content">
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nec nisi fermentum, blandit libero sed, 
+                convallis nisl. Fusce laoreet sapien sed urna vehicula, eu sagittis felis auctor. Class aptent taciti 
+                sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque habitant morbi 
+                tristique senectus et netus et malesuada fames ac turpis egestas. Duis varius vel est ut volutpat. 
+              </p>
+            </main>
+            <footer class="modal__footer">
+              <button id="start" class="modal__btn modal__btn-primary">Start</button>
+            </footer>
+          </div>
+        </div>
+    </div>
+    <script src="vendor/micromodal.min.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
