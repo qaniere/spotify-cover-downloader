@@ -1,0 +1,22 @@
+body {
+    height: 627px;
+    overflow: hidden;
+    background: -webkit-linear-gradient(to bottom, #485563, #29323c) no-repeat;
+    background: linear-gradient(to bottom, #485563, #29323c) no-repeat;
+}
+
+td {
+    height: 450px;
+    width: 450px;
+    border: 1px solid black;
+    position: absolute;
+    left: 50%;
+    margin-left: -225px;
+}
+
+h1 {
+    color: white;
+    font-size: 40px;
+    text-align: center;
+    font-family: 'Oswald', sans-serif;
+}
