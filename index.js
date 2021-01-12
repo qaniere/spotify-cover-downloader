@@ -9,6 +9,7 @@ function createWindow () {
     width: 700,
     height: 700,
     webPreferences: {
+      show: false,
       resizable: false,
       fullscreen: false,
       nodeIntegration: true
@@ -19,7 +20,12 @@ function createWindow () {
   win.setIcon('src/img/icon.png');
 }
 
-app.whenReady().then(createWindow)
+app.whenReady().then(createWindow).then(
+  app.once('ready-to-show', () => {
+    win.show()
+  })  
+)
+
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
