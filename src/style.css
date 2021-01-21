@@ -1,4 +1,5 @@
 body {
+    user-select: none;
     height: 627px;
     overflow: hidden;
     background-color: #121212;
@@ -18,4 +19,23 @@ h1 {
     font-size: 40px;
     text-align: center;
     font-family: 'Roboto', sans-serif;
+}
+
+button {
+    color: white;
+    background-color: black;
+    border: none;
+    outline: none;
+    height: 40px;
+    width: 100px;
+    font-size: 16px;
+}
+
+#buttonsZone {
+    width: 400px;
+    left: 50%;
+    margin-top: 450px;
+    margin-left: -200px;
+    position: absolute;
+    text-align: center;
 }
