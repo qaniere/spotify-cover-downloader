@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 
 try {
     require('electron-reloader')(module);
@@ -18,8 +18,9 @@ function createWindow () {
   win.setMenuBarVisibility(false);
   win.loadFile('src/index.html');
   win.setIcon('src/img/icon.png');
-  win.once("ready-to-show", function(){
+  win.once('ready-to-show', function(){
     win.show()
+    win.webContents.openDevTools()
   })
 }
 
@@ -35,4 +36,10 @@ app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
   }
+})
+
+ipcMain.on('asynchronous-message', (event, arg) => {
+  console.log("message :")
+  console.log(arg) 
+  event.reply('asynchronous-reply', 'pong')
 })
