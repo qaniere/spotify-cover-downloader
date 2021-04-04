@@ -7,6 +7,10 @@ ipcRenderer.on('download-complete', (event, arg) => {
     console.log('Download is complete');
 })
 
+ipcRenderer.on('invalid-url', (event, arg) => {
+    MicroModal.show('modal-invalid-url');
+})
+
 if(!localStorage.getItem('firstTimeRunningApp')) {
     localStorage.setItem('firstTimeRunningApp', false);
     MicroModal.show('modal-welcome');
@@ -15,6 +19,11 @@ if(!localStorage.getItem('firstTimeRunningApp')) {
 document.getElementById('start').addEventListener('click', () => {
     MicroModal.close('modal-welcome');
 });
+
+document.getElementById('confirmation-inv-url').addEventListener('click', () => {
+    MicroModal.close('modal-invalid-url');
+});
+
 
 document.getElementById('downloadButton').addEventListener('click', () => {
     let url = urlBar.value;
