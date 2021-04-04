@@ -1,7 +1,7 @@
 const { ipcRenderer } = require('electron')
 MicroModal.init();
 
-var urlBar = document.getElementById("urlBar");
+var urlBar = document.getElementById('urlBar');
 
 ipcRenderer.on('download-complete', (event, arg) => {
     console.log('Download is complete');
