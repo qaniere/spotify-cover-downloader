@@ -1,5 +1,8 @@
+const fs = require('fs')
 const https = require('https');
-const { app, BrowserWindow, ipcMain } = require('electron');
+const Stream = require('stream').Transform;
+const { app, BrowserWindow, ipcMain, dialog} = require('electron');
+
 
 function createWindow () {
     const win = new BrowserWindow({
@@ -34,6 +37,21 @@ app.on('activate', () => {
     }
 })
 
+var coverDownload = function(coverURL, path){
+
+    https.request(coverURL, function(response) {    
+
+        var data = new Stream();                                                    
+        response.on('data', function(chunk) {                                       
+           data.push(chunk);                                                         
+        });                                                                         
+  
+        response.on('end', function() {                                             
+           fs.writeFileSync(path + "\\test.png", data.read());                               
+        });                                                                         
+    }).end();
+  };
+
 ipcMain.on('ask-download', (event, url) => {
 
     if(!url.includes('https://open.spotify.com')) {
@@ -61,13 +79,18 @@ ipcMain.on('ask-download', (event, url) => {
 
                 let html = str.split('\n');
                 for(i = 0; i < html.length ; i++) {
+
                     if(html[i].includes("<meta property=\"og:image\"")) {
                         let head = html[i].split("<");
                         for(i = 0; i < head.length; i++) {
+
                             if(head[i].includes("meta property=\"og:image\"")) {
-                                coverUrl = head[i].replace("meta property=\"og:image\" content=\"", "")
+                                var coverUrl = head[i].replace("meta property=\"og:image\" content=\"", "")
                                 coverUrl = coverUrl.replace("\" />", "");
-                                console.log(coverUrl); //TODO : Deal with var scope
+                                // console.log(coverUrl); //TODO : Deal with var scope
+                                dialog.showOpenDialog({properties: ['openFile', 'openDirectory', 'multiSelections']}).then( (path) => {
+                                    coverDownload(coverUrl, path["filePaths"]);
+                                });
                             }
                         }
                     }
