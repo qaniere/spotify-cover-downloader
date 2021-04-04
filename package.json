@@ -11,5 +11,5 @@
   "license": "MIT",
   "dependencies": {
     "electron": "^11.1.1"
-  },
+  }
 }
