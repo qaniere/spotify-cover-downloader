@@ -104,8 +104,11 @@ ipcMain.on('ask-download', (event, url) => {
                                      {name: 'JPG image', extensions: ['jpg']},
                                     ]
                                 };
-                                dialog.showSaveDialog(saveOptions).then( (path) => {
-                                    coverDownload(coverUrl, path["filePath"], event);
+                                dialog.showSaveDialog(saveOptions).then((fileInfo) => {
+                                    
+                                    if(!fileInfo["canceled"]) {
+                                        coverDownload(coverUrl, fileInfo["filePath"], event);
+                                    }   
                                 });
                             }
                         }
