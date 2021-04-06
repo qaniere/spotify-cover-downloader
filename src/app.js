@@ -40,3 +40,11 @@ document.getElementById('downloadButton').addEventListener('click', () => {
     let url = urlBar.value;
     ipcRenderer.send('ask-download', url);
 });
+
+window.addEventListener('keyup', (event) => {
+
+    if(event.key == "Enter") {
+        let url = urlBar.value;
+        ipcRenderer.send('ask-download', url);
+    }
+});
