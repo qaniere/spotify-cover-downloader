@@ -1,10 +1,11 @@
-const fs = require('fs')
+const fs = require('fs');
+const temp = require("temp");
 const https = require('https');
-const Stream = require('stream').Transform;
 const { app, BrowserWindow, ipcMain, dialog} = require('electron');
 
 
 function createWindow () {
+
     const win = new BrowserWindow({
         width: 700,
         height: 700,
@@ -24,7 +25,6 @@ function createWindow () {
 }
 
 app.whenReady().then(createWindow);
-
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
     app.quit();
@@ -37,31 +37,40 @@ app.on('activate', () => {
     }
 })
 
-var coverDownload = function(coverURL, path){
+var coverDownload = function(coverURL, path, event){
 
     https.request(coverURL, function(response) {    
 
-        var data = new Stream();                                                    
+        var stream = temp.createWriteStream();                                            
         response.on('data', function(chunk) {                                       
-           data.push(chunk);                                                         
+            stream.write(chunk);                                                         
         });                                                                         
   
         response.on('end', function() {                                             
-           fs.writeFileSync(path + "\\test.png", data.read());                               
-        });                                                                         
+            stream.end();
+            var coverPath = stream.path;      
+
+            fs.rename(coverPath, coverPath + '.jpg', () => {
+                event.reply('cover-ready', coverPath += '.jpg');
+                fs.createReadStream(coverPath).pipe(fs.createWriteStream(path));
+            });        
+        });                                                                          
     }).end();
+    
   };
+
 
 ipcMain.on('ask-download', (event, url) => {
 
     if(!url.includes('https://open.spotify.com')) {
         event.reply('invalid-url');
+
     } else {
 
-        var options = {
+        var requestOptions = {
             host: 'open.spotify.com',
             port: 443,
-            path: path = url.replace("https://open.spotify.com", ""),
+            path: path = url.replace('https://open.spotify.com', ''),
             method: 'GET',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -69,7 +78,8 @@ ipcMain.on('ask-download', (event, url) => {
             }
         };
 
-        https.request(options, (res) => {
+        https.request(requestOptions, (res) => {
+
             var str = '';
             res.on('data', function(chunk) {
                 str += chunk;
@@ -87,9 +97,15 @@ ipcMain.on('ask-download', (event, url) => {
                             if(head[i].includes("meta property=\"og:image\"")) {
                                 var coverUrl = head[i].replace("meta property=\"og:image\" content=\"", "")
                                 coverUrl = coverUrl.replace("\" />", "");
-                                // console.log(coverUrl); //TODO : Deal with var scope
-                                dialog.showOpenDialog({properties: ['openFile', 'openDirectory', 'multiSelections']}).then( (path) => {
-                                    coverDownload(coverUrl, path["filePaths"]);
+
+                                let saveOptions = {
+                                    title: 'Save your cover',                                    
+                                    filters :[
+                                     {name: 'JPG image', extensions: ['jpg']},
+                                    ]
+                                };
+                                dialog.showSaveDialog(saveOptions).then( (path) => {
+                                    coverDownload(coverUrl, path["filePath"], event);
                                 });
                             }
                         }
