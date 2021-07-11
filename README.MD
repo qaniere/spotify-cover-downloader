@@ -6,7 +6,7 @@ by opening issues in case of problems and by proposing pull-requests.
 
 ## Download and setup
 
-* Make sure to have git, Node Js and NPM installed on your computer
+* Make sure to have git, Node Js and yarn installed on your computer
 
 * Download the project :
 
@@ -14,15 +14,15 @@ by opening issues in case of problems and by proposing pull-requests.
  
 * Install the dependencies :
   
-  > npm install
+  >  yarn
   
 * Launch the app :
 
-  > npm start
+  > yarn start
   
 ## Test the app
 
-Work in progress to add tests
+Work in progress to add tests...
 
 ## Licence
 
