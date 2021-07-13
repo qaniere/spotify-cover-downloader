@@ -1,7 +1,4 @@
-const fs = require('fs');
-const https = require('https');
-const { app, BrowserWindow, ipcMain, dialog} = require('electron');
-
+const { app, BrowserWindow} = require('electron');
 
 function createWindow () {
 
@@ -9,9 +6,9 @@ function createWindow () {
         width: 700,
         height: 700,
         show: false,
-        resizable: false,
         fullscreen: false,
         webPreferences: {
+            contextIsolation: false,
             nodeIntegration: true
         }
     });
@@ -27,11 +24,11 @@ app.whenReady().then(createWindow);
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
     app.quit();
-    }
+    };
 });
 
 app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
         createWindow();
     }
-})
+});
