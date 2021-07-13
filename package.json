@@ -10,7 +10,6 @@
   "author": "Quentin ANIERE",
   "license": "MIT",
   "dependencies": {
-    "electron": "^11.1.1",
-    "temp": "^0.9.4"
+    "electron": "^11.1.1"
   }
 }
